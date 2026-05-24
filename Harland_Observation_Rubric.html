@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harland New Teacher Observation Rubric</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-pale: #F5EDDA;
+    --gold-dim: #9A7530;
+    --obsidian: #0D0D0F;
+    --ink: #1A1A1F;
+    --slate: #4A4A56;
+    --mist: #9A9AA8;
+    --cream: #F8F5EF;
+    --cream-dark: #EDE8DF;
+    --concern: #B91C1C;
+    --concern-bg: #FEE2E2;
+    --developing: #B45309;
+    --developing-bg: #FED7AA;
+    --ontrack: #166534;
+    --ontrack-bg: #BBF7D0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 16px; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    padding: 32px 16px 80px;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #fff;
+    border: 0.5px solid var(--cream-dark);
+    padding: 56px 64px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  }
+
+  /* ── Toolbar (sticky, hidden in print) ────────────────────── */
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--obsidian);
+    color: #fff;
+    padding: 14px 24px;
+    margin: -32px -16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 1px solid var(--gold);
+  }
+
+  .toolbar-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .btn:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--gold);
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--obsidian);
+    border-color: var(--gold);
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    border-color: var(--gold-light);
+  }
+
+  .btn-ghost { color: rgba(255,255,255,0.6); }
+
+  .save-status {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-left: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .save-status.visible { opacity: 1; }
+
+  /* ── Header ────────────────────────────────────────────────── */
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 28px;
+    border-bottom: 0.5px solid var(--cream-dark);
+  }
+
+  .doc-label {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .doc-subtitle {
+    font-size: 14px;
+    color: var(--slate);
+    font-weight: 300;
+  }
+
+  .doc-intro {
+    margin-top: 24px;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--slate);
+    line-height: 1.7;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    font-style: italic;
+  }
+
+  /* ── Section heads ────────────────────────────────────────── */
+  .section {
+    margin-top: 40px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 28px;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .section-hint {
+    font-size: 12px;
+    color: var(--slate);
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  /* ── Form info table ──────────────────────────────────────── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--cream-dark);
+    border: 0.5px solid var(--cream-dark);
+  }
+
+  .info-cell {
+    background: #fff;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .info-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    min-width: 110px;
+    flex-shrink: 0;
+  }
+
+  .info-cell input,
+  .info-cell select {
+    flex: 1;
+    border: none;
+    border-bottom: 0.5px solid var(--cream-dark);
+    background: transparent;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    padding: 4px 0;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .info-cell input:focus,
+  .info-cell select:focus {
+    border-bottom-color: var(--gold);
+  }
+
+  /* ── Rubric ────────────────────────────────────────────────── */
+  .rubric {
+    border: 0.5px solid var(--cream-dark);
+    overflow: hidden;
+  }
+
+  .rubric-header {
+    display: grid;
+    grid-template-columns: 2fr 0.9fr 0.9fr 0.9fr 2.8fr;
+    background: var(--obsidian);
+    color: #fff;
+  }
+
+  .rubric-header > div {
+    padding: 12px 14px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    border-right: 0.5px solid rgba(255,255,255,0.08);
+  }
+  .rubric-header > div:last-child { border-right: none; }
+  .rubric-header > div:first-child { text-align: left; }
+
+  .rubric-row {
+    display: grid;
+    grid-template-columns: 2fr 0.9fr 0.9fr 0.9fr 2.8fr;
+    border-top: 0.5px solid var(--cream-dark);
+    background: #fff;
+  }
+
+  .rubric-row:nth-child(even) { background: rgba(0,0,0,0.012); }
+
+  .rubric-cell {
+    padding: 16px 14px;
+    border-right: 0.5px solid var(--cream-dark);
+  }
+  .rubric-cell:last-child { border-right: none; }
+
+  .criterion-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+
+  .criterion-desc {
+    font-size: 11px;
+    color: var(--slate);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  /* Score buttons (radio-like) */
+  .score-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 8px;
+    cursor: pointer;
+    transition: background 0.12s ease;
+  }
+
+  .score-cell:hover {
+    background: var(--gold-pale);
+  }
+
+  .score-cell input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .score-mark {
+    width: 28px;
+    height: 28px;
+    border: 1.5px solid var(--mist);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--slate);
+    transition: all 0.15s ease;
+  }
+
+  .score-cell input[type="radio"]:checked + .score-mark {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--obsidian);
+  }
+
+  .score-cell input[type="radio"]:focus-visible + .score-mark {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+
+  .score-desc {
+    font-size: 9.5px;
+    color: var(--mist);
+    text-align: center;
+    line-height: 1.3;
+    min-height: 26px;
+  }
+
+  /* Evidence textarea */
+  .evidence-cell textarea {
+    width: 100%;
+    min-height: 80px;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--ink);
+    resize: vertical;
+    outline: none;
+    line-height: 1.5;
+  }
+  .evidence-cell textarea::placeholder { color: var(--mist); font-style: italic; }
+
+  /* ── Score summary panel ─────────────────────────────────── */
+  .summary-panel {
+    background: var(--obsidian);
+    color: #fff;
+    padding: 24px 28px;
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 32px;
+    align-items: center;
+  }
+
+  .summary-score {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .summary-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--gold);
+  }
+
+  .summary-out-of {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: var(--gold-dim);
+  }
+
+  .summary-bands {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .band {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+  }
+  .band.active {
+    opacity: 1;
+  }
+
+  .band-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .band-dot.ontrack { background: #5AAA78; }
+  .band-dot.developing { background: var(--gold-light); }
+  .band-dot.concern { background: #C04848; }
+
+  .band-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    color: #fff;
+  }
+
+  .band-range {
+    color: rgba(255,255,255,0.5);
+    margin-left: auto;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── Free-text blocks ─────────────────────────────────────── */
+  .text-block {
+    margin-top: 24px;
+  }
+
+  .text-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .text-block textarea {
+    width: 100%;
+    min-height: 90px;
+    border: none;
+    border-bottom: 0.5px solid var(--cream-dark);
+    background: rgba(0,0,0,0.015);
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    padding: 12px 14px;
+    resize: vertical;
+    outline: none;
+    line-height: 1.6;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .text-block textarea:focus {
+    border-bottom-color: var(--gold);
+    background: var(--gold-pale);
+  }
+
+  .text-block textarea::placeholder { color: var(--mist); font-style: italic; }
+
+  /* ── Action table ────────────────────────────────────────── */
+  .action-table {
+    width: 100%;
+    border: 0.5px solid var(--cream-dark);
+    margin-top: 16px;
+  }
+
+  .action-row {
+    display: grid;
+    grid-template-columns: 2.5fr 1.2fr 1.5fr;
+    border-bottom: 0.5px solid var(--cream-dark);
+  }
+  .action-row:last-child { border-bottom: none; }
+
+  .action-row.header {
+    background: var(--obsidian);
+    color: #fff;
+  }
+
+  .action-row.header > div {
+    padding: 10px 14px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .action-cell {
+    padding: 8px;
+    border-right: 0.5px solid var(--cream-dark);
+  }
+  .action-cell:last-child { border-right: none; }
+
+  .action-cell input,
+  .action-cell textarea {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--ink);
+    padding: 6px 8px;
+    outline: none;
+    resize: none;
+  }
+  .action-cell textarea { min-height: 36px; }
+  .action-cell input:focus,
+  .action-cell textarea:focus { background: var(--gold-pale); }
+
+  /* ── Overall assessment ──────────────────────────────────── */
+  .assessment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .assessment-option {
+    border: 0.5px solid var(--cream-dark);
+    padding: 14px 18px;
+    cursor: pointer;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: all 0.15s ease;
+    background: #fff;
+  }
+
+  .assessment-option:hover {
+    border-color: var(--gold);
+    background: var(--gold-pale);
+  }
+
+  .assessment-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .assessment-mark {
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--mist);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 2px;
+    position: relative;
+    transition: all 0.15s ease;
+  }
+
+  .assessment-option input[type="radio"]:checked ~ .assessment-mark {
+    border-color: var(--gold);
+    background: var(--gold);
+  }
+
+  .assessment-option input[type="radio"]:checked ~ .assessment-mark::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: #fff;
+    border-radius: 50%;
+  }
+
+  .assessment-option input[type="radio"]:checked ~ .assessment-text .assessment-label {
+    color: var(--gold-dim);
+  }
+
+  .assessment-option:has(input:checked) {
+    border-color: var(--gold);
+    border-width: 1px;
+    background: var(--gold-pale);
+  }
+
+  .assessment-text { flex: 1; }
+
+  .assessment-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .assessment-desc {
+    font-size: 13px;
+    color: var(--slate);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* ── Signature block ─────────────────────────────────────── */
+  .signature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 0.5px solid var(--cream-dark);
+  }
+
+  .sig-block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sig-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .sig-line {
+    border-bottom: 0.5px solid var(--ink);
+    margin-bottom: 8px;
+    padding-bottom: 36px;
+  }
+
+  .sig-name {
+    font-size: 12px;
+    color: var(--slate);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .sig-name input {
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 12px;
+    color: var(--slate);
+    outline: none;
+    text-align: right;
+    width: 120px;
+  }
+  .sig-name input:focus { border-bottom: 0.5px solid var(--gold); }
+
+  /* ── Print styles ────────────────────────────────────────── */
+  @media print {
+    body { background: #fff; padding: 0; }
+    .container { box-shadow: none; border: none; padding: 0 12mm; max-width: 100%; }
+    .toolbar, .save-status { display: none !important; }
+    .text-block textarea { background: transparent; border-bottom: 0.5px solid var(--cream-dark) !important; }
+    .text-block textarea:focus, .action-cell input:focus, .action-cell textarea:focus { background: transparent !important; }
+    .rubric-row:nth-child(even) { background: transparent; }
+    .assessment-option { break-inside: avoid; }
+    .rubric-row, .signature-grid, .summary-panel { break-inside: avoid; }
+    .section { break-inside: avoid; }
+    @page { size: A4; margin: 14mm; }
+  }
+
+  /* ── Small screens ────────────────────────────────────────── */
+  @media (max-width: 720px) {
+    .container { padding: 32px 20px; }
+    .rubric-header, .rubric-row { grid-template-columns: 1fr; }
+    .rubric-cell { border-right: none; border-bottom: 0.5px solid var(--cream-dark); }
+    .rubric-cell:last-child { border-bottom: none; }
+    .summary-panel { grid-template-columns: 1fr; }
+    .info-grid { grid-template-columns: 1fr; }
+    .action-row { grid-template-columns: 1fr; }
+    .action-cell { border-right: none; border-bottom: 0.5px solid var(--cream-dark); }
+    .signature-grid { grid-template-columns: 1fr; }
+    h1 { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div>
+    <div class="toolbar-label">Harland Education</div>
+  </div>
+  <div class="save-status" id="save-status">Saved</div>
+  <div class="toolbar-actions">
+    <button class="btn btn-ghost" id="btn-reset" type="button">Reset form</button>
+    <button class="btn btn-primary" id="btn-print" type="button">Download as PDF</button>
+  </div>
+</div>
+
+<div class="container">
+
+<header>
+  <div class="doc-label">New Teacher Observation</div>
+  <h1>Drop-in rubric</h1>
+  <div class="doc-subtitle">90-day observation programme</div>
+  <p class="doc-intro">Used during a new teacher's first 90 days. Three observations are scheduled (day 14, day 45, day 75). Completed by the observer during or immediately after the lesson; written feedback shared with the teacher within one week.</p>
+</header>
+
+<!-- Header info -->
+<div class="section">
+  <div class="info-grid">
+    <div class="info-cell">
+      <label class="info-label" for="f-teacher">Teacher</label>
+      <input type="text" id="f-teacher" data-field="teacher">
+    </div>
+    <div class="info-cell">
+      <label class="info-label" for="f-obs-num">Observation</label>
+      <select id="f-obs-num" data-field="obs_num">
+        <option value="">—</option>
+        <option value="1">1 of 3 (day 14)</option>
+        <option value="2">2 of 3 (day 45)</option>
+        <option value="3">3 of 3 (day 75)</option>
+      </select>
+    </div>
+    <div class="info-cell">
+      <label class="info-label" for="f-date">Date</label>
+      <input type="date" id="f-date" data-field="date">
+    </div>
+    <div class="info-cell">
+      <label class="info-label" for="f-day">Day of programme</label>
+      <input type="text" id="f-day" data-field="day_of_prog" placeholder="e.g. day 45">
+    </div>
+    <div class="info-cell">
+      <label class="info-label" for="f-subject">Subject / level</label>
+      <input type="text" id="f-subject" data-field="subject">
+    </div>
+    <div class="info-cell">
+      <label class="info-label" for="f-student">Student profile</label>
+      <input type="text" id="f-student" data-field="student" placeholder="age, programme">
+    </div>
+    <div class="info-cell">
+      <label class="info-label" for="f-observer">Observer (Head Teacher)</label>
+      <input type="text" id="f-observer" data-field="observer" value="Ms. M">
+    </div>
+    <div class="info-cell">
+      <label class="info-label" for="f-length">Session length</label>
+      <input type="text" id="f-length" data-field="length" placeholder="e.g. 90 min">
+    </div>
+  </div>
+</div>
+
+<!-- Rubric -->
+<div class="section">
+  <div class="section-label">Observation rubric</div>
+  <div class="section-title">Score each criterion</div>
+  <div class="section-hint">Score 1 (concern), 2 (developing), or 3 (on standard). Note evidence in the right-hand column.</div>
+
+  <div class="rubric">
+    <div class="rubric-header">
+      <div>Criterion</div>
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>Evidence observed</div>
+    </div>
+
+    <!-- 6 criteria rows generated here -->
+    <div id="rubric-body"></div>
+  </div>
+</div>
+
+<!-- Score summary -->
+<div class="summary-panel">
+  <div>
+    <div style="font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px;">Total score</div>
+    <div class="summary-score">
+      <span class="summary-number" id="score-total">0</span>
+      <span class="summary-out-of">/ 18</span>
+    </div>
+  </div>
+  <div class="summary-bands">
+    <div class="band" data-band="ontrack">
+      <div class="band-dot ontrack"></div>
+      <div class="band-label">On track</div>
+      <div class="band-range">15 – 18</div>
+    </div>
+    <div class="band" data-band="developing">
+      <div class="band-dot developing"></div>
+      <div class="band-label">Developing</div>
+      <div class="band-range">10 – 14</div>
+    </div>
+    <div class="band" data-band="concern">
+      <div class="band-dot concern"></div>
+      <div class="band-label">Concern</div>
+      <div class="band-range">under 10</div>
+    </div>
+  </div>
+</div>
+
+<!-- Narrative notes -->
+<div class="section">
+  <div class="section-label">Narrative notes</div>
+  <div class="section-title">In the observer's own words</div>
+
+  <div class="text-block">
+    <div class="text-label">Standout moment (positive)</div>
+    <textarea data-field="standout" placeholder="A specific moment that best illustrates the teacher's strength in this session"></textarea>
+  </div>
+
+  <div class="text-block">
+    <div class="text-label">Concern flagged</div>
+    <textarea data-field="concern" placeholder="A specific moment or pattern that gives pause"></textarea>
+  </div>
+
+  <div class="text-block">
+    <div class="text-label">Specific feedback to share with teacher</div>
+    <textarea data-field="feedback" placeholder="What the teacher will hear from you in the post-observation conversation" style="min-height: 140px;"></textarea>
+  </div>
+</div>
+
+<!-- Action plan -->
+<div class="section">
+  <div class="section-label">Actions and follow-up</div>
+  <div class="section-title">What changes by the next observation</div>
+
+  <div class="action-table">
+    <div class="action-row header">
+      <div>Action for teacher</div>
+      <div>Target date</div>
+      <div>To check at next observation</div>
+    </div>
+    <div class="action-row">
+      <div class="action-cell"><textarea data-field="action_1"></textarea></div>
+      <div class="action-cell"><input type="date" data-field="action_1_date"></div>
+      <div class="action-cell"><textarea data-field="action_1_check"></textarea></div>
+    </div>
+    <div class="action-row">
+      <div class="action-cell"><textarea data-field="action_2"></textarea></div>
+      <div class="action-cell"><input type="date" data-field="action_2_date"></div>
+      <div class="action-cell"><textarea data-field="action_2_check"></textarea></div>
+    </div>
+    <div class="action-row">
+      <div class="action-cell"><textarea data-field="action_3"></textarea></div>
+      <div class="action-cell"><input type="date" data-field="action_3_date"></div>
+      <div class="action-cell"><textarea data-field="action_3_check"></textarea></div>
+    </div>
+    <div class="action-row">
+      <div class="action-cell"><textarea data-field="action_4"></textarea></div>
+      <div class="action-cell"><input type="date" data-field="action_4_date"></div>
+      <div class="action-cell"><textarea data-field="action_4_check"></textarea></div>
+    </div>
+  </div>
+</div>
+
+<!-- Overall assessment -->
+<div class="section">
+  <div class="section-label">Overall assessment</div>
+  <div class="section-title">For this observation</div>
+  <div class="section-hint">Choose one.</div>
+
+  <div class="assessment-options">
+    <label class="assessment-option">
+      <input type="radio" name="assessment" value="on_track">
+      <span class="assessment-mark"></span>
+      <div class="assessment-text">
+        <div class="assessment-label">On track</div>
+        <div class="assessment-desc">No concerns. Continue as planned. Next observation as scheduled.</div>
+      </div>
+    </label>
+    <label class="assessment-option">
+      <input type="radio" name="assessment" value="developing">
+      <span class="assessment-mark"></span>
+      <div class="assessment-text">
+        <div class="assessment-label">Developing</div>
+        <div class="assessment-desc">Specific areas to work on but no fundamental concerns. Actions logged above.</div>
+      </div>
+    </label>
+    <label class="assessment-option">
+      <input type="radio" name="assessment" value="concern">
+      <span class="assessment-mark"></span>
+      <div class="assessment-text">
+        <div class="assessment-label">Concern</div>
+        <div class="assessment-desc">Significant gap to Harland standard. Escalate to Phil. Action plan needed before next observation.</div>
+      </div>
+    </label>
+  </div>
+</div>
+
+<!-- Signatures -->
+<div class="signature-grid">
+  <div class="sig-block">
+    <div class="sig-label">Observer signature</div>
+    <div class="sig-line"></div>
+    <div class="sig-name">
+      <span>Ms. M, Head Teacher</span>
+      <span>Date: <input type="text" data-field="sig_date_observer" placeholder=""></span>
+    </div>
+  </div>
+  <div class="sig-block">
+    <div class="sig-label">Teacher acknowledgement</div>
+    <div class="sig-line"></div>
+    <div class="sig-name">
+      <span><input type="text" data-field="sig_name_teacher" placeholder="Teacher name" style="text-align: left; width: 150px;"></span>
+      <span>Date: <input type="text" data-field="sig_date_teacher" placeholder=""></span>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ── Criteria definitions ────────────────────────────────────
+  const CRITERIA = [
+    {
+      id: 'structure',
+      title: 'Lesson structure',
+      desc: 'Followed review → gaps → new material → set work',
+      score1: 'Structure absent or jumbled',
+      score2: 'Structure mostly present, some gaps',
+      score3: 'Clear structure, followed throughout',
+    },
+    {
+      id: 'clarity',
+      title: 'Explanation clarity',
+      desc: 'Broke down ideas at the right level; checked for understanding',
+      score1: 'Concepts unclear or pitched wrong',
+      score2: 'Mostly clear, limited checking',
+      score3: 'Clear, well-pitched, regular checking',
+    },
+    {
+      id: 'rapport',
+      title: 'Student rapport and engagement',
+      desc: 'Connected with the student, kept them present and motivated',
+      score1: 'Student disengaged; transactional tone',
+      score2: 'Some rapport, intermittent engagement',
+      score3: 'Strong rapport, student fully engaged',
+    },
+    {
+      id: 'adaptability',
+      title: 'Adaptability',
+      desc: 'Adjusted approach when something was not landing',
+      score1: 'Stuck to script regardless',
+      score2: 'Adjusted once or twice when prompted',
+      score3: 'Read the student, adapted naturally',
+    },
+    {
+      id: 'technical',
+      title: 'Technical fluency',
+      desc: 'Platform, screen sharing, materials, transitions',
+      score1: 'Disruptions affected lesson flow',
+      score2: 'Minor friction, lesson continued',
+      score3: 'Smooth, integrated, no friction',
+    },
+    {
+      id: 'systems',
+      title: 'Adherence to Harland systems',
+      desc: '15-minute pre-lesson presence, lesson notes, homework set, materials use',
+      score1: 'Multiple systems missed',
+      score2: 'Most systems followed, one or two gaps',
+      score3: 'All systems followed without prompt',
+    },
+  ];
+
+  // ── Render rubric rows ──────────────────────────────────────
+  const body = document.getElementById('rubric-body');
+  body.innerHTML = CRITERIA.map(cr => `
+    <div class="rubric-row" data-criterion="${cr.id}">
+      <div class="rubric-cell">
+        <div class="criterion-title">${cr.title}</div>
+        <div class="criterion-desc">${cr.desc}</div>
+      </div>
+      ${[1, 2, 3].map(n => `
+        <label class="rubric-cell score-cell">
+          <input type="radio" name="score_${cr.id}" value="${n}" data-field="score_${cr.id}">
+          <div class="score-mark">${n}</div>
+          <div class="score-desc">${cr['score' + n]}</div>
+        </label>
+      `).join('')}
+      <div class="rubric-cell evidence-cell">
+        <textarea data-field="evidence_${cr.id}" placeholder="What you observed..."></textarea>
+      </div>
+    </div>
+  `).join('');
+
+  // ── Score calculation ──────────────────────────────────────
+  const scoreEl = document.getElementById('score-total');
+  const bands = document.querySelectorAll('.band');
+
+  function recalcScore() {
+    let total = 0;
+    CRITERIA.forEach(cr => {
+      const checked = document.querySelector(`input[name="score_${cr.id}"]:checked`);
+      if (checked) total += parseInt(checked.value, 10);
+    });
+    scoreEl.textContent = total;
+
+    bands.forEach(b => b.classList.remove('active'));
+    if (total === 0) return;
+    if (total >= 15) document.querySelector('[data-band="ontrack"]').classList.add('active');
+    else if (total >= 10) document.querySelector('[data-band="developing"]').classList.add('active');
+    else document.querySelector('[data-band="concern"]').classList.add('active');
+  }
+
+  // ── Save/load to localStorage ──────────────────────────────
+  const saveStatus = document.getElementById('save-status');
+  let saveTimer = null;
+
+  function collectState() {
+    const state = {};
+    document.querySelectorAll('[data-field]').forEach(el => {
+      const key = el.dataset.field;
+      if (el.type === 'radio') {
+        if (el.checked) state[el.name] = el.value;
+      } else {
+        state[key] = el.value;
+      }
+    });
+    const assessment = document.querySelector('input[name="assessment"]:checked');
+    if (assessment) state.assessment = assessment.value;
+    return state;
+  }
+
+  function applyState(state) {
+    if (!state) return;
+    Object.keys(state).forEach(key => {
+      const val = state[key];
+      if (key === 'assessment') {
+        const radio = document.querySelector(`input[name="assessment"][value="${val}"]`);
+        if (radio) radio.checked = true;
+        return;
+      }
+      if (key.startsWith('score_')) {
+        const radio = document.querySelector(`input[name="${key}"][value="${val}"]`);
+        if (radio) radio.checked = true;
+        return;
+      }
+      const el = document.querySelector(`[data-field="${key}"]`);
+      if (el) el.value = val;
+    });
+    recalcScore();
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(collectState()));
+      showSaved();
+    } catch (e) {
+      // localStorage might be blocked; fail silently
+    }
+  }
+
+  function showSaved() {
+    saveStatus.textContent = 'Saved';
+    saveStatus.classList.add('visible');
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => saveStatus.classList.remove('visible'), 1500);
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) applyState(JSON.parse(raw));
+    } catch (e) {}
+  }
+
+  // ── Event wiring ───────────────────────────────────────────
+  document.addEventListener('input', e => {
+    if (e.target.matches('[data-field], input[name="assessment"]')) {
+      if (e.target.name && e.target.name.startsWith('score_')) recalcScore();
+      saveState();
+    }
+  });
+  document.addEventListener('change', e => {
+    if (e.target.matches('input[type="radio"]')) {
+      if (e.target.name.startsWith('score_')) recalcScore();
+      saveState();
+    }
+  });
+
+  // Auto-fill day-of-programme based on observation selection
+  const obsSelect = document.getElementById('f-obs-num');
+  const dayField = document.getElementById('f-day');
+  obsSelect.addEventListener('change', () => {
+    const map = { '1': 'Day 14', '2': 'Day 45', '3': 'Day 75' };
+    if (map[obsSelect.value] && !dayField.value) {
+      dayField.value = map[obsSelect.value];
+      saveState();
+    }
+  });
+
+  // ── URL parameter handling ─────────────────────────────────
+  function getUrlParams() {
+    const p = new URLSearchParams(window.location.search);
+    return {
+      teacher: p.get('teacher') || '',
+      start: p.get('start') || '',
+      obs: p.get('obs') || '',
+      subject: p.get('subject') || '',
+    };
+  }
+
+  function slugify(s) {
+    return (s || '').replace(/[^a-z0-9]/gi, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+  }
+
+  function surnameOf(fullName) {
+    const parts = (fullName || '').trim().split(/\s+/);
+    return parts.length ? parts[parts.length - 1] : 'Teacher';
+  }
+
+  // Use a per-teacher storage key so different teachers don't overwrite each other
+  const urlParams = getUrlParams();
+  // ── Storage versioning ─────────────────────────────────────
+  // Bump STORAGE_VERSION whenever the form structure changes in a way that
+  // makes old saved drafts inconsistent with the new layout (renamed fields,
+  // removed inputs, changed default values, etc.). This automatically wipes
+  // stale drafts on next load so users don't see old data.
+  const STORAGE_VERSION = 'v2';
+
+  function purgeOldDrafts() {
+    try {
+      const keysToRemove = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (!key) continue;
+        // Match any rubric draft key from a prior version (anything containing
+        // 'harland_observation_rubric_draft_' but not the current STORAGE_VERSION).
+        if (key.startsWith('harland_observation_rubric_draft_') &&
+            !key.includes(`_${STORAGE_VERSION}`) &&
+            !key.includes(`_${STORAGE_VERSION}_`)) {
+          keysToRemove.push(key);
+        }
+      }
+      keysToRemove.forEach(k => localStorage.removeItem(k));
+    } catch (e) {
+      // localStorage may be blocked; ignore
+    }
+  }
+  purgeOldDrafts();
+
+  const STORAGE_KEY = urlParams.teacher
+    ? `harland_observation_rubric_draft_${STORAGE_VERSION}_${slugify(urlParams.teacher)}_${urlParams.obs || 'na'}`
+    : `harland_observation_rubric_draft_${STORAGE_VERSION}`;
+
+  // Update browser tab title and download filename hint
+  function updateDocTitle() {
+    const teacher = document.getElementById('f-teacher').value || urlParams.teacher;
+    const obsSel = document.getElementById('f-obs-num').value;
+    const dateField = document.getElementById('f-date').value;
+    const dateStr = dateField || new Date().toISOString().slice(0, 10);
+    if (teacher) {
+      const surname = surnameOf(teacher);
+      const obsNum = obsSel || '1';
+      // This filename is what most browsers suggest when saving as PDF
+      document.title = `${surname}_Observation_${obsNum}_${dateStr}`;
+    } else {
+      document.title = 'Harland New Teacher Observation Rubric';
+    }
+  }
+
+  // Pre-fill from URL parameters (only if fields are empty after loadState)
+  function applyUrlParams() {
+    if (urlParams.teacher) {
+      const f = document.getElementById('f-teacher');
+      if (!f.value) f.value = urlParams.teacher;
+    }
+    if (urlParams.obs) {
+      const f = document.getElementById('f-obs-num');
+      if (!f.value) {
+        f.value = urlParams.obs;
+        // Fire the change so day-of-programme auto-fills
+        const dayField = document.getElementById('f-day');
+        const map = { '1': 'Day 14', '2': 'Day 45', '3': 'Day 75' };
+        if (map[urlParams.obs] && !dayField.value) dayField.value = map[urlParams.obs];
+      }
+    }
+    if (urlParams.subject) {
+      const f = document.getElementById('f-subject');
+      if (!f.value) f.value = urlParams.subject;
+    }
+    if (urlParams.start && urlParams.obs) {
+      // Calculate the suggested observation date from start + offset
+      const offsets = { '1': 14, '2': 45, '3': 75 };
+      const offset = offsets[urlParams.obs];
+      if (offset !== undefined) {
+        const startDate = new Date(urlParams.start + 'T00:00:00');
+        if (!isNaN(startDate.getTime())) {
+          const obsDate = new Date(startDate);
+          obsDate.setDate(obsDate.getDate() + offset);
+          const dateField = document.getElementById('f-date');
+          if (!dateField.value) {
+            dateField.value = obsDate.toISOString().slice(0, 10);
+          }
+        }
+      }
+    }
+  }
+
+  // Buttons
+  document.getElementById('btn-print').addEventListener('click', () => {
+    updateDocTitle();
+    window.print();
+  });
+
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    if (!confirm('Reset the entire form? Any unsaved changes will be lost.')) return;
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    document.querySelectorAll('input, textarea, select').forEach(el => {
+      if (el.type === 'radio' || el.type === 'checkbox') el.checked = false;
+      else if (el.id !== 'f-observer') el.value = '';
+    });
+    document.getElementById('f-observer').value = 'Ms. M';
+    recalcScore();
+    updateDocTitle();
+  });
+
+  // Update filename hint whenever teacher, observation, or date changes
+  ['f-teacher', 'f-obs-num', 'f-date'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('change', updateDocTitle);
+    if (el) el.addEventListener('input', updateDocTitle);
+  });
+
+  // Initial load
+  loadState();
+  applyUrlParams();
+  updateDocTitle();
+})();
+</script>
+
+</body>
+</html>

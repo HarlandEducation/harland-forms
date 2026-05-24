@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harland New Teacher Admin Checklist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-pale: #F5EDDA;
+    --gold-dim: #9A7530;
+    --obsidian: #0D0D0F;
+    --ink: #1A1A1F;
+    --slate: #4A4A56;
+    --mist: #9A9AA8;
+    --cream: #F8F5EF;
+    --cream-dark: #EDE8DF;
+    --escalate: #B91C1C;
+    --escalate-bg: #FEE2E2;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-size: 16px; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    padding: 32px 16px 80px;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: #fff;
+    border: 0.5px solid var(--cream-dark);
+    padding: 56px 64px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  }
+
+  /* ── Toolbar ──────────────────────────────────────────────── */
+  .toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--obsidian);
+    color: #fff;
+    padding: 14px 24px;
+    margin: -32px -16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 1px solid var(--gold);
+  }
+
+  .toolbar-label {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .toolbar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .btn:hover { background: rgba(255,255,255,0.08); border-color: var(--gold); }
+  .btn-primary { background: var(--gold); color: var(--obsidian); border-color: var(--gold); }
+  .btn-primary:hover { background: var(--gold-light); border-color: var(--gold-light); }
+  .btn-ghost { color: rgba(255,255,255,0.6); }
+
+  .save-status {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-left: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .save-status.visible { opacity: 1; }
+
+  /* ── Header ────────────────────────────────────────────────── */
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-bottom: 28px;
+    border-bottom: 0.5px solid var(--cream-dark);
+  }
+
+  .doc-label {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 44px;
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .doc-subtitle { font-size: 14px; color: var(--slate); font-weight: 300; }
+
+  .doc-intro {
+    margin-top: 24px;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--slate);
+    line-height: 1.7;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    font-style: italic;
+  }
+
+  /* ── Progress meter ───────────────────────────────────────── */
+  .progress-strip {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+    background: var(--obsidian);
+    color: #fff;
+    padding: 16px 24px;
+  }
+
+  .progress-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .progress-label {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .progress-bar {
+    height: 4px;
+    background: rgba(255,255,255,0.1);
+    position: relative;
+    width: 220px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+
+  .progress-count {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    color: #fff;
+  }
+
+  .progress-count .total {
+    color: var(--gold-dim);
+    font-size: 20px;
+  }
+
+  /* ── Sections ─────────────────────────────────────────────── */
+  .section { margin-top: 40px; }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    font-size: 28px;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .section-hint {
+    font-size: 12px;
+    color: var(--slate);
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  /* ── Info table ───────────────────────────────────────────── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--cream-dark);
+    border: 0.5px solid var(--cream-dark);
+  }
+
+  .info-cell {
+    background: #fff;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .info-label {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    min-width: 110px;
+    flex-shrink: 0;
+  }
+
+  .info-cell input {
+    flex: 1;
+    border: none;
+    border-bottom: 0.5px solid var(--cream-dark);
+    background: transparent;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    padding: 4px 0;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .info-cell input:focus { border-bottom-color: var(--gold); }
+  .info-cell input[readonly] { color: var(--slate); font-style: italic; }
+
+  /* ── Checklist table ──────────────────────────────────────── */
+  .checklist {
+    border: 0.5px solid var(--cream-dark);
+    overflow: hidden;
+  }
+
+  .checklist-header {
+    display: grid;
+    grid-template-columns: 70px 1fr 130px 130px;
+    background: var(--obsidian);
+    color: #fff;
+  }
+
+  .checklist-header > div {
+    padding: 10px 14px;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border-right: 0.5px solid rgba(255,255,255,0.08);
+  }
+  .checklist-header > div:last-child { border-right: none; }
+  .checklist-header > div:nth-child(1),
+  .checklist-header > div:nth-child(3),
+  .checklist-header > div:nth-child(4) { text-align: center; }
+
+  .checklist-row {
+    display: grid;
+    grid-template-columns: 70px 1fr 130px 130px;
+    border-top: 0.5px solid var(--cream-dark);
+    background: #fff;
+    transition: background 0.15s ease;
+  }
+
+  .checklist-row:nth-child(even) { background: rgba(0,0,0,0.012); }
+  .checklist-row.checked { background: var(--gold-pale); }
+
+  .checklist-cell {
+    padding: 14px 16px;
+    border-right: 0.5px solid var(--cream-dark);
+    display: flex;
+    align-items: flex-start;
+  }
+  .checklist-cell:last-child { border-right: none; }
+
+  .check-cell {
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .check-cell input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .check-mark {
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid var(--mist);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    background: #fff;
+  }
+
+  .check-cell input[type="checkbox"]:checked + .check-mark {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+
+  .check-cell input[type="checkbox"]:checked + .check-mark::after {
+    content: '';
+    width: 7px;
+    height: 12px;
+    border: solid var(--obsidian);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) translate(-1px, -1px);
+  }
+
+  .check-cell input[type="checkbox"]:focus-visible + .check-mark {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+
+  .item-cell { flex-direction: column; gap: 4px; }
+
+  .item-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  .item-detail {
+    font-size: 12px;
+    color: var(--slate);
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  .target-cell {
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: var(--slate);
+    text-align: center;
+  }
+
+  .completed-cell {
+    align-items: center;
+    padding: 8px;
+  }
+
+  .completed-cell input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--ink);
+    padding: 4px 6px;
+    outline: none;
+    text-align: center;
+  }
+  .completed-cell input:focus { background: #fff; outline: 1px solid var(--gold); }
+
+  /* Escalation section special styling */
+  .checklist.escalation .checklist-header { background: #5C1818; }
+  .checklist.escalation .checklist-row.checked { background: var(--escalate-bg); }
+
+  /* ── Decision options ─────────────────────────────────────── */
+  .decision-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .decision-option {
+    border: 0.5px solid var(--cream-dark);
+    padding: 14px 18px;
+    cursor: pointer;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: all 0.15s ease;
+    background: #fff;
+  }
+
+  .decision-option:hover { border-color: var(--gold); background: var(--gold-pale); }
+
+  .decision-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .decision-mark {
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--mist);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 2px;
+    position: relative;
+    transition: all 0.15s ease;
+  }
+
+  .decision-option input[type="radio"]:checked ~ .decision-mark {
+    border-color: var(--gold);
+    background: var(--gold);
+  }
+
+  .decision-option input[type="radio"]:checked ~ .decision-mark::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: #fff;
+    border-radius: 50%;
+  }
+
+  .decision-option:has(input:checked) {
+    border-color: var(--gold);
+    background: var(--gold-pale);
+  }
+
+  .decision-text { flex: 1; }
+
+  .decision-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .decision-desc {
+    font-size: 13px;
+    color: var(--slate);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* ── Signature block ─────────────────────────────────────── */
+  .signature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 0.5px solid var(--cream-dark);
+  }
+
+  .sig-block { display: flex; flex-direction: column; }
+
+  .sig-label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .sig-line {
+    border-bottom: 0.5px solid var(--ink);
+    margin-bottom: 8px;
+    padding-bottom: 36px;
+  }
+
+  .sig-name {
+    font-size: 12px;
+    color: var(--slate);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .sig-name input {
+    border: none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 12px;
+    color: var(--slate);
+    outline: none;
+    text-align: right;
+    width: 120px;
+  }
+  .sig-name input:focus { border-bottom: 0.5px solid var(--gold); }
+
+  /* ── Print ────────────────────────────────────────────────── */
+  @media print {
+    body { background: #fff; padding: 0; }
+    .container { box-shadow: none; border: none; padding: 0 12mm; max-width: 100%; }
+    .toolbar, .save-status { display: none !important; }
+    .checklist-row:nth-child(even) { background: transparent; }
+    .checklist-row, .signature-grid, .progress-strip, .decision-option { break-inside: avoid; }
+    .section { break-inside: avoid-page; }
+    @page { size: A4; margin: 14mm; }
+  }
+
+  @media (max-width: 720px) {
+    .container { padding: 32px 20px; }
+    .checklist-header, .checklist-row { grid-template-columns: 50px 1fr; }
+    .checklist-header > div:nth-child(3),
+    .checklist-header > div:nth-child(4),
+    .checklist-row > div:nth-child(3),
+    .checklist-row > div:nth-child(4) { display: none; }
+    .info-grid { grid-template-columns: 1fr; }
+    .signature-grid { grid-template-columns: 1fr; }
+    .progress-strip { grid-template-columns: 1fr; gap: 12px; }
+    h1 { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div>
+    <div class="toolbar-label">Harland Education</div>
+  </div>
+  <div class="save-status" id="save-status">Saved</div>
+  <div class="toolbar-actions">
+    <button class="btn btn-ghost" id="btn-reset" type="button">Reset form</button>
+    <button class="btn btn-primary" id="btn-print" type="button">Download as PDF</button>
+  </div>
+</div>
+
+<div class="container">
+
+<header>
+  <div class="doc-label">New Teacher Onboarding</div>
+  <h1>Admin checklist</h1>
+  <div class="doc-subtitle">First 90 days</div>
+  <p class="doc-intro">One sheet per new teacher. Ruby owns the admin checks; Ms. M owns the observation milestones. Tick boxes and date completed; flag anything missing to Ms. M.</p>
+</header>
+
+<!-- Header info -->
+<div class="section">
+  <div class="info-grid">
+    <div class="info-cell">
+      <label class="info-label" for="f-teacher">Teacher</label>
+      <input type="text" id="f-teacher" data-field="teacher">
+    </div>
+    <div class="info-cell">
+      <label class="info-label" for="f-start">Start date</label>
+      <input type="date" id="f-start" data-field="start_date">
+    </div>
+    <div class="info-cell">
+      <label class="info-label" for="f-subject">Subject</label>
+      <input type="text" id="f-subject" data-field="subject">
+    </div>
+    <div class="info-cell">
+      <label class="info-label" for="f-day90">Day 90 falls on</label>
+      <input type="text" id="f-day90" data-field="day90" readonly placeholder="auto-calculated">
+    </div>
+    <div class="info-cell">
+      <label class="info-label" for="f-admin">Admin owner</label>
+      <input type="text" id="f-admin" data-field="admin" value="Ruby Cheng">
+    </div>
+    <div class="info-cell">
+      <label class="info-label" for="f-ht">Head Teacher</label>
+      <input type="text" id="f-ht" data-field="head_teacher" value="Ms. M">
+    </div>
+  </div>
+</div>
+
+<!-- Progress -->
+<div class="progress-strip">
+  <div class="progress-info">
+    <div class="progress-label">Checklist progress</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+  <div class="progress-count">
+    <span id="progress-done">0</span><span class="total"> / <span id="progress-total">0</span></span>
+  </div>
+</div>
+
+<!-- Section 1: First two weeks -->
+<div class="section">
+  <div class="section-label">Section 1</div>
+  <div class="section-title">First two weeks</div>
+  <div class="checklist" data-section="section1"></div>
+</div>
+
+<!-- Section 2: Ongoing -->
+<div class="section">
+  <div class="section-label">Section 2</div>
+  <div class="section-title">Ongoing checks (first month)</div>
+  <div class="checklist" data-section="section2"></div>
+</div>
+
+<!-- Section 3: Milestones -->
+<div class="section">
+  <div class="section-label">Section 3</div>
+  <div class="section-title">90-day milestones</div>
+  <div class="checklist" data-section="section3"></div>
+</div>
+
+<!-- Section 4: Escalation -->
+<div class="section">
+  <div class="section-label">Section 4</div>
+  <div class="section-title">Escalation triggers</div>
+  <div class="section-hint">If any of the below happen, escalate immediately rather than waiting for the next observation.</div>
+  <div class="checklist escalation" data-section="section4"></div>
+</div>
+
+<!-- Decision -->
+<div class="section">
+  <div class="section-label">Final</div>
+  <div class="section-title">90-day decision</div>
+
+  <div class="decision-options">
+    <label class="decision-option">
+      <input type="radio" name="decision" value="continue">
+      <span class="decision-mark"></span>
+      <div class="decision-text">
+        <div class="decision-label">Continue</div>
+        <div class="decision-desc">Move to Tier B. No action plan needed.</div>
+      </div>
+    </label>
+    <label class="decision-option">
+      <input type="radio" name="decision" value="continue_with_plan">
+      <span class="decision-mark"></span>
+      <div class="decision-text">
+        <div class="decision-label">Continue with action plan</div>
+        <div class="decision-desc">Tier B with specific items to monitor at next review.</div>
+      </div>
+    </label>
+    <label class="decision-option">
+      <input type="radio" name="decision" value="extend">
+      <span class="decision-mark"></span>
+      <div class="decision-text">
+        <div class="decision-label">Extend probation observation</div>
+        <div class="decision-desc">Further 30-day window with additional drop-ins.</div>
+      </div>
+    </label>
+    <label class="decision-option">
+      <input type="radio" name="decision" value="do_not_continue">
+      <span class="decision-mark"></span>
+      <div class="decision-text">
+        <div class="decision-label">Do not continue</div>
+        <div class="decision-desc">Notice given per contract terms.</div>
+      </div>
+    </label>
+  </div>
+</div>
+
+<!-- Signatures -->
+<div class="signature-grid">
+  <div class="sig-block">
+    <div class="sig-label">Admin sign-off</div>
+    <div class="sig-line"></div>
+    <div class="sig-name">
+      <span>Ruby Cheng</span>
+      <span>Date: <input type="text" data-field="sig_date_admin" placeholder=""></span>
+    </div>
+  </div>
+  <div class="sig-block">
+    <div class="sig-label">Head Teacher sign-off</div>
+    <div class="sig-line"></div>
+    <div class="sig-name">
+      <span>Ms. M</span>
+      <span>Date: <input type="text" data-field="sig_date_ht" placeholder=""></span>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ── URL parameter handling ─────────────────────────────────
+  function getUrlParams() {
+    const p = new URLSearchParams(window.location.search);
+    return {
+      teacher: p.get('teacher') || '',
+      start: p.get('start') || '',
+      subject: p.get('subject') || '',
+    };
+  }
+
+  function slugify(s) {
+    return (s || '').replace(/[^a-z0-9]/gi, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+  }
+
+  function surnameOf(fullName) {
+    const parts = (fullName || '').trim().split(/\s+/);
+    return parts.length ? parts[parts.length - 1] : 'Teacher';
+  }
+
+  const urlParams = getUrlParams();
+  // ── Storage versioning ─────────────────────────────────────
+  // Bump STORAGE_VERSION whenever form structure changes (renamed fields,
+  // added/removed items, changed defaults). Old drafts get purged on load.
+  const STORAGE_VERSION = 'v2';
+
+  function purgeOldDrafts() {
+    try {
+      const keysToRemove = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (!key) continue;
+        if (key.startsWith('harland_admin_checklist_draft_') &&
+            !key.includes(`_${STORAGE_VERSION}`) &&
+            !key.includes(`_${STORAGE_VERSION}_`)) {
+          keysToRemove.push(key);
+        }
+      }
+      keysToRemove.forEach(k => localStorage.removeItem(k));
+    } catch (e) {}
+  }
+  purgeOldDrafts();
+
+  const STORAGE_KEY = urlParams.teacher
+    ? `harland_admin_checklist_draft_${STORAGE_VERSION}_${slugify(urlParams.teacher)}`
+    : `harland_admin_checklist_draft_${STORAGE_VERSION}`;
+
+  // ── Checklist items ────────────────────────────────────────
+  const ITEMS = {
+    section1: [
+      { id: 's1_teachworks', title: 'Teachworks profile set up', detail: 'Account created, subject and rate confirmed, schedule visible to admin', target: 'Day 1' },
+      { id: 's1_platforms', title: 'Platform access', detail: 'Zoom, Google Drive, Harland materials folder, LINE group, internal docs', target: 'Day 1' },
+      { id: 's1_onboarding', title: 'Onboarding meeting with Ms. M', detail: 'Walkthrough of Harland systems, expectations, first students', target: 'Day 1–3' },
+      { id: 's1_students', title: 'First students briefed', detail: 'Student profile, pathway, recent unit reports shared with teacher', target: 'Before first lesson' },
+      { id: 's1_offer', title: 'Offer of Employment sent and agreed', detail: 'Offer letter issued and accepted in writing before contract signing', target: 'Pre-start' },
+      { id: 's1_contract', title: 'Contract on file', detail: 'Signed copy stored, probation end date logged in tracker', target: 'Day 1' },
+    ],
+    section2: [
+      { id: 's2_presence', title: 'Pre-lesson 15-minute presence check', detail: 'Teachworks login or arrival time vs scheduled lesson, weekly', target: 'Weekly × 4' },
+      { id: 's2_notes', title: 'Lesson notes completed', detail: 'Spot-check notes are filled in after each session, escalate if missing', target: 'Weekly' },
+      { id: 's2_homework', title: 'Homework set and recorded', detail: 'Confirm homework is going out and being tracked', target: 'Weekly × 4' },
+      { id: 's2_writing', title: 'First writing project deadline confirmed', detail: 'Date logged with admin, 5 working days\u2019 lead time before unit closes', target: 'Within 2 weeks' },
+      { id: 's2_parent', title: 'Parent communication check', detail: 'First parent message sent within first 2 weeks', target: 'By day 14' },
+    ],
+    section3: [
+      { id: 's3_obs1', title: 'Day 14: Observation 1 complete', detail: 'Ms. M confirms rubric filled in and feedback shared', target: 'Day 14', offset: 14 },
+      { id: 's3_fb1', title: 'Day 14: Feedback delivered to teacher', detail: 'Within one week of observation', target: 'By day 21', offset: 21 },
+      { id: 's3_30day', title: 'Day 30: 30-day check-in (formal review)', detail: 'Logged in tracker, scored if applicable', target: 'Day 30', offset: 30 },
+      { id: 's3_obs2', title: 'Day 45: Observation 2 complete', detail: 'Rubric, feedback, action plan if needed', target: 'Day 45', offset: 45 },
+      { id: 's3_unit', title: 'Day 60: First Unit Completion sent', detail: 'Confirm first unit closed and PDF sent to family', target: 'By day 60', offset: 60 },
+      { id: 's3_obs3', title: 'Day 75: Observation 3 complete', detail: 'Final observation, readiness check for tier transition', target: 'Day 75', offset: 75 },
+      { id: 's3_decision', title: 'Day 90: Transition decision', detail: 'Continue (move to Tier B) / Action plan / Do not continue', target: 'Day 90', offset: 90 },
+    ],
+    section4: [
+      { id: 's4_noshow', title: 'No-show or late cancellation', detail: 'Flag to Ms. M within 24 hours', target: 'Same day' },
+      { id: 's4_complaint', title: 'Parent complaint received', detail: 'Acknowledge to parent, escalate to Ms. M same day', target: 'Same day' },
+      { id: 's4_concern', title: 'Observation scored "Concern"', detail: 'Notify Phil, action plan within 7 days', target: 'Within 24 hours' },
+      { id: 's4_breach', title: 'Repeated 15-minute breaches', detail: 'Two or more in a single week: flag to Ms. M', target: 'Weekly' },
+    ],
+  };
+
+  // ── Render checklists ──────────────────────────────────────
+  function renderChecklist(section) {
+    const container = document.querySelector(`[data-section="${section}"]`);
+    const items = ITEMS[section];
+
+    let html = `
+      <div class="checklist-header">
+        <div>Done</div>
+        <div>Item</div>
+        <div>Target</div>
+        <div>Completed on</div>
+      </div>
+    `;
+
+    items.forEach(item => {
+      html += `
+        <div class="checklist-row" data-item-id="${item.id}">
+          <label class="checklist-cell check-cell">
+            <input type="checkbox" data-field="${item.id}_done">
+            <div class="check-mark"></div>
+          </label>
+          <div class="checklist-cell item-cell">
+            <div class="item-title">${item.title}</div>
+            <div class="item-detail">${item.detail}</div>
+          </div>
+          <div class="checklist-cell target-cell" data-target="${item.id}" data-offset="${item.offset || ''}">
+            ${item.target}
+          </div>
+          <div class="checklist-cell completed-cell">
+            <input type="date" data-field="${item.id}_completed">
+          </div>
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
+  }
+
+  Object.keys(ITEMS).forEach(renderChecklist);
+
+  // ── Progress meter ─────────────────────────────────────────
+  const checkboxes = document.querySelectorAll('input[type="checkbox"][data-field]');
+  const progressFill = document.getElementById('progress-fill');
+  const progressDone = document.getElementById('progress-done');
+  const progressTotal = document.getElementById('progress-total');
+
+  function updateProgress() {
+    let done = 0;
+    checkboxes.forEach(cb => { if (cb.checked) done++; });
+    const total = checkboxes.length;
+    progressDone.textContent = done;
+    progressTotal.textContent = total;
+    progressFill.style.width = total > 0 ? `${(done / total) * 100}%` : '0%';
+  }
+
+  // Visual feedback for checked rows
+  function refreshRowStates() {
+    checkboxes.forEach(cb => {
+      const row = cb.closest('.checklist-row');
+      if (row) row.classList.toggle('checked', cb.checked);
+    });
+  }
+
+  // ── Day 90 calculator ──────────────────────────────────────
+  const startInput = document.getElementById('f-start');
+  const day90Display = document.getElementById('f-day90');
+
+  function fmtDate(d) {
+    return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
+
+  function updateDates() {
+    const v = startInput.value;
+    if (!v) {
+      day90Display.value = '';
+      // Reset all target dates to default text
+      document.querySelectorAll('[data-target]').forEach(el => {
+        const id = el.dataset.target;
+        const item = findItem(id);
+        if (item) el.textContent = item.target;
+      });
+      return;
+    }
+    const start = new Date(v + 'T00:00:00');
+    const day90 = new Date(start);
+    day90.setDate(day90.getDate() + 90);
+    day90Display.value = fmtDate(day90);
+
+    // Update milestone target cells with actual dates
+    document.querySelectorAll('[data-target]').forEach(el => {
+      const id = el.dataset.target;
+      const item = findItem(id);
+      if (!item) return;
+      if (item.offset !== undefined && item.offset !== '') {
+        const d = new Date(start);
+        d.setDate(d.getDate() + item.offset);
+        el.innerHTML = `${item.target}<div style="font-size: 10px; color: var(--gold-dim); margin-top: 2px; font-style: italic;">${fmtDate(d)}</div>`;
+      } else {
+        el.textContent = item.target;
+      }
+    });
+  }
+
+  function findItem(id) {
+    for (const sec of Object.values(ITEMS)) {
+      const item = sec.find(i => i.id === id);
+      if (item) return item;
+    }
+    return null;
+  }
+
+  // ── Save/load state ────────────────────────────────────────
+  const saveStatus = document.getElementById('save-status');
+  let saveTimer = null;
+
+  function collectState() {
+    const state = {};
+    document.querySelectorAll('[data-field]').forEach(el => {
+      const key = el.dataset.field;
+      if (el.type === 'checkbox') state[key] = el.checked;
+      else state[key] = el.value;
+    });
+    const dec = document.querySelector('input[name="decision"]:checked');
+    if (dec) state.decision = dec.value;
+    return state;
+  }
+
+  function applyState(state) {
+    if (!state) return;
+    Object.keys(state).forEach(key => {
+      const val = state[key];
+      if (key === 'decision') {
+        const radio = document.querySelector(`input[name="decision"][value="${val}"]`);
+        if (radio) radio.checked = true;
+        return;
+      }
+      const el = document.querySelector(`[data-field="${key}"]`);
+      if (!el) return;
+      if (el.type === 'checkbox') el.checked = !!val;
+      else el.value = val || '';
+    });
+    updateDates();
+    updateProgress();
+    refreshRowStates();
+  }
+
+  function showSaved() {
+    saveStatus.textContent = 'Saved';
+    saveStatus.classList.add('visible');
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => saveStatus.classList.remove('visible'), 1500);
+  }
+
+  function saveState() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(collectState()));
+      showSaved();
+    } catch (e) {}
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) applyState(JSON.parse(raw));
+      else updateProgress();
+    } catch (e) { updateProgress(); }
+  }
+
+  // ── Wiring ─────────────────────────────────────────────────
+  document.addEventListener('input', e => {
+    if (e.target.matches('[data-field], input[name="decision"]')) {
+      saveState();
+      if (e.target.id === 'f-start') updateDates();
+    }
+  });
+
+  document.addEventListener('change', e => {
+    if (e.target.type === 'checkbox') {
+      updateProgress();
+      refreshRowStates();
+      saveState();
+    } else if (e.target.type === 'radio') {
+      saveState();
+    } else if (e.target.id === 'f-start') {
+      updateDates();
+      saveState();
+    }
+  });
+
+  // ── URL parameter pre-fill ─────────────────────────────────
+  function applyUrlParams() {
+    if (urlParams.teacher) {
+      const f = document.getElementById('f-teacher');
+      if (!f.value) f.value = urlParams.teacher;
+    }
+    if (urlParams.start) {
+      const f = document.getElementById('f-start');
+      if (!f.value) {
+        f.value = urlParams.start;
+        updateDates();
+      }
+    }
+    if (urlParams.subject) {
+      const f = document.getElementById('f-subject');
+      if (!f.value) f.value = urlParams.subject;
+    }
+  }
+
+  // ── Filename hint for "Save as PDF" ────────────────────────
+  function updateDocTitle() {
+    const teacher = document.getElementById('f-teacher').value || urlParams.teacher;
+    const dateStr = new Date().toISOString().slice(0, 10);
+    if (teacher) {
+      document.title = `${surnameOf(teacher)}_AdminChecklist_${dateStr}`;
+    } else {
+      document.title = 'Harland New Teacher Admin Checklist';
+    }
+  }
+
+  ['f-teacher'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('change', updateDocTitle);
+      el.addEventListener('input', updateDocTitle);
+    }
+  });
+
+  document.getElementById('btn-print').addEventListener('click', () => {
+    updateDocTitle();
+    window.print();
+  });
+
+  document.getElementById('btn-reset').addEventListener('click', () => {
+    if (!confirm('Reset the entire form? Any unsaved changes will be lost.')) return;
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    document.querySelectorAll('input, textarea').forEach(el => {
+      if (el.type === 'radio' || el.type === 'checkbox') el.checked = false;
+      else if (el.id !== 'f-admin' && el.id !== 'f-ht') el.value = '';
+    });
+    document.getElementById('f-admin').value = 'Ruby Cheng';
+    document.getElementById('f-ht').value = 'Ms. M';
+    updateDates();
+    updateProgress();
+    refreshRowStates();
+  });
+
+  loadState();
+  applyUrlParams();
+  updateDocTitle();
+})();
+</script>
+
+</body>
+</html>
